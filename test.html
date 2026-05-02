@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destiny 2 Season Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="test.css">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <main>
+    <div class="emblem">⬡</div>
+    <p class="subtitle">DESTINY 2</p>
+    <h1>Nächste Season</h1>
+    <p id="season-name" class="season-label">Lade Daten...</p>
+
+    <div id="timer" class="timer">
+      <div class="unit">
+        <div class="value-wrap">
+          <span id="days" class="value">--</span>
+        </div>
+        <span class="label">Tage</span>
+      </div>
+      <div class="separator">:</div>
+      <div class="unit">
+        <div class="value-wrap">
+          <span id="hours" class="value">--</span>
+        </div>
+        <span class="label">Stunden</span>
+      </div>
+      <div class="separator">:</div>
+      <div class="unit">
+        <div class="value-wrap">
+          <span id="minutes" class="value">--</span>
+        </div>
+        <span class="label">Minuten</span>
+      </div>
+      <div class="separator">:</div>
+      <div class="unit">
+        <div class="value-wrap">
+          <span id="seconds" class="value">--</span>
+        </div>
+        <span class="label">Sekunden</span>
+      </div>
+    </div>
+
+    <div id="error" class="error"></div>
+    <div class="divider"></div>
+    <p class="footer-note">Daten direkt von der Bungie API</p>
+  </main>
+
+  <script>
+    const API_KEY = "DEIN_API_KEY_HIER";
+
+    async function fetchSeasonEnd() {
+      try {
+        const res = await fetch("https://www.bungie.net/Platform/Destiny2/Milestones/", {
+          headers: { "X-API-Key": API_KEY }
+        });
+        const data = await res.json();
+
+        let latestEnd = null;
+
+        for (const key in data.Response) {
+          const ms = data.Response[key];
+          if (ms.endDate) {
+            const end = new Date(ms.endDate);
+            if (!latestEnd || end > latestEnd) {
+              latestEnd = end;
+            }
+          }
+        }
+
+        if (!latestEnd) {
+          document.getElementById("error").textContent = "Kein Enddatum gefunden.";
+          document.getElementById("season-name").textContent = "";
+          return;
+        }
+
+        document.getElementById("season-name").textContent = "startet in";
+        startCountdown(latestEnd);
+
+      } catch (e) {
+        document.getElementById("error").textContent = "API-Fehler: " + e.message;
+        document.getElementById("season-name").textContent = "";
+      }
+    }
+
+    function startCountdown(endDate) {
+      function update() {
+        const now = new Date();
+        const diff = endDate - now;
+
+        if (diff <= 0) {
+          document.getElementById("season-name").textContent = "Die neue Season ist da!";
+          ["days","hours","minutes","seconds"].forEach(id => {
+            document.getElementById(id).textContent = "00";
+          });
+          return;
+        }
+
+        const days    = Math.floor(diff / 86400000);
+        const hours   = Math.floor((diff % 86400000) / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        const seconds = Math.floor((diff % 60000) / 1000);
+
+        document.getElementById("days").textContent    = String(days).padStart(2, "0");
+        document.getElementById("hours").textContent   = String(hours).padStart(2, "0");
+        document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+        document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+      }
+
+      update();
+      setInterval(update, 1000);
+    }
+
+    fetchSeasonEnd();
+  </script>
+</body>
+</html>

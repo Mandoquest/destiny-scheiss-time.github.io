@@ -13,6 +13,29 @@ body {
   font-family: 'Rajdhani', sans-serif;
 }
 
+
+
+.überschrift {
+  font-family: 'Orbitron', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 4rem;
+  left: 50%;
+  font-size: clamp(0.5rem, 2vw, 1.5rem);
+  transform: translateX(-50%);
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;     /* IE 10+ und Edge */
+  user-select: none;         /* Standard */
+}
+
+
+
+
 .timer {
   display: flex;
   align-items: flex-start;
@@ -21,6 +44,9 @@ body {
 
 .unit {
   display: flex;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;     /* IE 10+ und Edge */
+  user-select: none;         /* Standard */
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
@@ -28,13 +54,14 @@ body {
 
 .value {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-size: clamp(4rem, 12vw, 8rem);
   font-weight: 700;
   color: #ffffff;
+  font-variant-numeric: tabular-nums;
 }
 
 .label {
-  font-size: 0.65rem;
+  font-size: 1rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #666666;
@@ -42,9 +69,13 @@ body {
 
 .separator {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(2rem, 6vw, 4rem);
+  font-size: clamp(4rem, 12vw, 8rem);
   color: #444444;
   line-height: 1.1;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;     /* IE 10+ und Edge */
+  user-select: none;         /* Standard */
+  flex-direction: column;
   animation: blink 1s step-end infinite;
 }
 
