@@ -12,6 +12,11 @@
 </head>
 <body>
 
+  <div class="bg-grid"></div>
+
+
+
+
   <div class="überschrift">
     <h1 class="idk">Destiny 2</h1>
     <h2 class="idk">Season Timer</h2> 
@@ -41,7 +46,53 @@
 
   <div id="error" class="error"></div>
 
+
+
+  <div class="Buttonclass">
+  <button class="bg-btn" onclick="nextBackground()">⬡</button>
+  </div>
+
+
   <script>
+    const themes = [
+      {
+        bg: "none",
+        bodyClass: "theme-default"
+      },
+      {
+        bg: "url('Art1.jpg')",
+        bodyClass: "theme-red"
+      },
+      {
+        bg: "url('Art2.jpg')",
+        bodyClass: "theme-white"
+      },
+      {
+        bg: "url('Art3.jpg')",
+        bodyClass: "theme-white-dark-title"
+      },
+      {
+        bg: "url('Art4.jpg')",
+        bodyClass: "theme-white"
+      }
+    ];
+
+    let bgIndex = 0;
+
+    function nextBackground() {
+      bgIndex = (bgIndex + 1) % themes.length;
+      const theme = themes[bgIndex];
+
+      // Alle theme-Klassen entfernen
+      document.body.className = "";
+      document.body.classList.add(theme.bodyClass);
+
+      document.body.style.backgroundImage = theme.bg;
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+    ument.body.style.backgroundPosition = "center";
+    }
+
     // Liest die lokale season.json — kein CORS-Problem
     async function fetchSeasonEnd() {
       try {

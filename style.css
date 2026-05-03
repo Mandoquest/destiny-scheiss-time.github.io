@@ -13,8 +13,20 @@ body {
   font-family: 'Rajdhani', sans-serif;
 }
 
+/* ── Karomuster ── */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(#333333 1px, transparent 1px),
+    linear-gradient(90deg, #333333 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
 
-
+/* ── Überschrift ── */
 .überschrift {
   font-family: 'Orbitron', sans-serif;
   display: flex;
@@ -23,45 +35,46 @@ body {
   position: absolute;
   top: 4rem;
   left: 50%;
-  font-size: clamp(0.5rem, 2vw, 1.5rem);
   transform: translateX(-50%);
+  font-size: clamp(0.5rem, 2vw, 1.5rem);
   font-weight: 700;
   text-align: center;
-  color: #ffffff;
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none;     /* IE 10+ und Edge */
-  user-select: none;         /* Standard */
+  color: white;
+  z-index: 1;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  white-space: nowrap;
 }
 
-
-
-
+/* ── Timer ── */
 .timer {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
+  z-index: 1;
 }
 
 .unit {
   display: flex;
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none;     /* IE 10+ und Edge */
-  user-select: none;         /* Standard */
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 .value {
   font-family: 'Orbitron', sans-serif;
   font-size: clamp(4rem, 12vw, 8rem);
   font-weight: 700;
-  color: #ffffff;
+  color: white;
   font-variant-numeric: tabular-nums;
 }
 
 .label {
-  font-size: 1rem;
+  font-size: 2rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #666666;
@@ -72,10 +85,9 @@ body {
   font-size: clamp(4rem, 12vw, 8rem);
   color: #444444;
   line-height: 1.1;
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none;     /* IE 10+ und Edge */
-  user-select: none;         /* Standard */
-  flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
   animation: blink 1s step-end infinite;
 }
 
@@ -84,8 +96,70 @@ body {
   50%       { opacity: 0; }
 }
 
+/* ── Button ── */
+.bg-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #242424;
+  border: 1px solid #333;
+  color: #ffffff;
+  font-size: 1.2rem;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.bg-btn:hover {
+  background: #333;
+}
+
+/* ── Error ── */
 .error {
   color: #e05555;
   font-size: 0.85rem;
   text-align: center;
+  z-index: 1;
+}
+
+/* ══════════════════════════════
+   THEMES
+══════════════════════════════ */
+
+/* Karo bei Artworks verstecken */
+.theme-red .bg-grid,
+.theme-white .bg-grid,
+.theme-white-dark-title .bg-grid {
+  display: none;
+}
+
+/* Art1 — Rot */
+.theme-red .value,
+.theme-red .separator,
+.theme-red .überschrift h1,
+.theme-red .überschrift h2 {
+  color: #cc0000;
+}
+.theme-red .label { color: #990000; }
+
+/* Art2 & Art4 — Weiß */
+.theme-white .value,
+.theme-white .separator,
+.theme-white .überschrift h1,
+.theme-white .überschrift h2 {
+  color: #ffffff;
+}
+.theme-white .label { color: #cccccc; }
+
+/* Art3 — Weiß, Überschrift schwarz */
+.theme-white-dark-title .value,
+.theme-white-dark-title .separator {
+  color: #ffffff;
+}
+.theme-white-dark-title .label { color: #cccccc; }
+.theme-white-dark-title .überschrift h1,
+.theme-white-dark-title .überschrift h2 {
+  color: #000000;
 }
